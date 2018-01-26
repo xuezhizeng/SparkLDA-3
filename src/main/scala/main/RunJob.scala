@@ -7,7 +7,7 @@ import org.apache.spark.sql.{SQLContext, SparkSession}
 import tool.Setup
 
 /**
-  * Created by gportier on 16/11/2017.
+  * Created by Grégoire PORTIER.
   */
 abstract class RunJob{
   private val spark: SparkSession = MainClass.spark

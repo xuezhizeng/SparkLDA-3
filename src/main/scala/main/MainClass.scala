@@ -1,7 +1,7 @@
 package main
 
 /**
-  * Created by b79073 on 18/07/2017.
+  * Created by Grégoire PORTIER.
   */
 
 import org.apache.commons.configuration.PropertiesConfiguration
