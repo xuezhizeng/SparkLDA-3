@@ -30,8 +30,8 @@ object Setup {
 
     val conf = new SparkConf().setAppName(nameApp).set("spark.driver.allowMultipleContexts","true")
       .set("es.index.auto.create","true")
-      .set("es.nodes","") // Conf
-      .set("es.port","")
+      .set("es.nodes","bifrost.fr.capgemini.com")
+      .set("es.port","19200")
 
     // Initialize master
     if (Setup.isWindow()){

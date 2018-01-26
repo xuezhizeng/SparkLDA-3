@@ -6,6 +6,8 @@ Try running this code in the Spark shell.  It may produce different topics each 
 This example is inspired from a blog post on LDA in Spark: http://databricks.com/blog
 */
 
+package datascience
+
 import main.{MainClass, RunJob}
 import org.apache.commons.configuration.PropertiesConfiguration
 import org.apache.spark.sql.SparkSession
@@ -30,7 +32,7 @@ class ModelingLDA extends RunJob {
 
 
   // Load documents from text files, 1 document per file
-  val corpus: RDD[String] = sc.wholeTextFiles("file_reviews/*").map(_._2)
+  val corpus: RDD[String] = sc.wholeTextFiles("challenge/txt/txt/*").map({case(a,b)=>b})
 
   // Split each document into a sequence of terms (words)
   val tokenized: RDD[Seq[String]] =
@@ -61,16 +63,13 @@ class ModelingLDA extends RunJob {
     }
 
   // Set LDA parameters
-  val numTopics = 40
+  val numTopics = 10
   val lda = new LDA().setK(numTopics).setMaxIterations(100)
 
   val ldaModel = lda.run(documents)
-//  val avgLogLikelihood = ldaModel.logLikelihood(documents) / documents.count()
-//  println("logLikelihood:")
-//  println(logLikelihood)
 
   // Print topics, showing top-weighted 10 terms for each topic.
-  val topicIndices = ldaModel.describeTopics(maxTermsPerTopic = 20)
+  val topicIndices = ldaModel.describeTopics(maxTermsPerTopic = 10)
   topicIndices.foreach { case (terms, termWeights) =>
     println("TOPIC:")
     terms.zip(termWeights).foreach { case (term, weight) =>
@@ -78,7 +77,9 @@ class ModelingLDA extends RunJob {
     }
     println()
   }
-}
+
+  //  topicIndices.saveAsTextFile("outputDirectory");
+
+  }
 }
 
-//topicIndices.saveAsTextFile("outputDirectory");

@@ -38,8 +38,8 @@ object MainClass {
 
   def main(args: Array[String]) {
 
-    val in = getClass.getResourceAsStream("/data.properties")
-    PROP.load(in)
+    //val in = getClass.getResourceAsStream("/data.properties")
+    //PROP.load(in)
 
 
 
