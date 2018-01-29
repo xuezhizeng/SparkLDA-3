@@ -25,6 +25,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-compiler</artifactId>
             <version>${scala.version}</version>
@@ -58,6 +65,14 @@
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
             <version>3.6.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>3.6.0</version>
+            <classifier>models</classifier>
         </dependency>
 
         <dependency>
@@ -147,9 +162,10 @@
                             <shadedClassifierName>UBER</shadedClassifierName>
                             <artifactSet>
                                 <includes>
+                                    <include>com.google.protobuf:protobuf-java</include>
                                     <include>com.databricks:spark-csv_${scala.compact.version}</include>
                                     <include>org.apache.commons:commons-csv</include>
-                                    <include></include>
+                                    <include>edu.stanford.nlp:stanford-corenlp</include>
                                     <include>com.typesafe.scala-logging</include>
                                 </includes>
                                 <excludes>

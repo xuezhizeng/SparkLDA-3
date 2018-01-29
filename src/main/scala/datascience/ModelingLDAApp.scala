@@ -28,13 +28,13 @@ case class Params(
                    docConcentration: Double = -1,
                    topicConcentration: Double = -1,
                    vocabSize: Int = 2900000,
-                   stopwordFile: String = "src/main/resources/stopWords.txt",
+                   stopwordFile: String = "challenge/txt/stopWords.txt",
                    algorithm: String = "em",
                    checkpointDir: Option[String] = None,
                    checkpointInterval: Int = 10)
 
 
-class ModelingLD2App() extends RunJob {
+class ModelingLDAApp() extends RunJob {
 
   private val sc = MainClass.sc
   private val spark: SparkSession = MainClass.spark
@@ -43,7 +43,7 @@ class ModelingLD2App() extends RunJob {
   def run() {
 
     val lda = new ModelingLDA2(sc,spark)
-    val defaultParams = Params().copy(input = "src/main/resources/docs/Transformed/*/*")
+    val defaultParams = Params().copy(input = "challenge/txt/txt/*")
     lda.run(defaultParams)
 
   }
@@ -109,7 +109,7 @@ class ModelingLDA2(sc: SparkContext, spark: SparkSession) {
       println()
 
       //create test input, convert to term count, and get its topic distribution
-      val test_input = "" // TODO Add path
+      val test_input = "challenge/txt/txt/Transatlantic_TTMM_SAP.txt" // TODO Add path
       val (test_document, _, _) =
         preprocess(sc, test_input, params.vocabSize, params.stopwordFile)
 
@@ -160,12 +160,14 @@ class ModelingLDA2(sc: SparkContext, spark: SparkSession) {
 
     import spark.implicits._
     //Reading the Whole Text Files
+    println("===========================PREPROCESS PATHS=====================================")
+    println(paths)
+
     val initialrdd_0 = spark.sparkContext.wholeTextFiles(paths)
     //neinitialrdd_0.take(2).foreach(println)
-    val doc_path_index = initialrdd_0.map(_._1)
-      .map(_.stripPrefix("file:/")) // TODO : Path
-      .map(_.stripSuffix(".txt"))
-      .zipWithIndex()
+    println("======================= DOC_PATH_INDEX ===================================")
+    /// doc_path_index.show(10,false)
+
     //doc_path_index.saveAsTextFile(s"doc_file_index")
     //doc_path_index.take(2).foreach(println)
     val initialrdd = initialrdd_0.map(_._2)
